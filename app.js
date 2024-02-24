@@ -1,5 +1,5 @@
 let colors = require('colors');
-const { inquirerMenu, pause, readInput } = require('./helpers/InteractiveMenu');
+const { inquirerMenu, pause, readInput, deleteMenu } = require('./helpers/InteractiveMenu');
 const Tasks = require('./models/tasks');
 const { saveDB, readDB } = require('./helpers/saveFile');
 
@@ -33,6 +33,10 @@ const main = async() =>{
                 break;
             case '4':
                 tasks.listPendingTasks();
+                break;
+            case '6':
+                const id = await deleteMenu(tasks.listArr);
+                tasks.deleteTask(id);
                 break;
         }
 

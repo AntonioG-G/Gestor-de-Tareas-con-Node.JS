@@ -80,8 +80,36 @@ const readInput = async(msg) =>{
     const {desc} = await inquirer.prompt(question);
     return desc;
 }
+
+const deleteMenu = async(tasks = []) =>{
+    const choices = tasks.map( (tarea, i) =>{
+        return{
+            value: tarea.id,
+            name:`${i+1}. ${tarea.description}`.white
+        }
+    });
+    const question = [
+        {
+            type: 'list',
+            name: 'id',
+            message: `${'Selecciona una opcion a borrar ↑↓'.yellow}`,
+            choices
+        }
+    ]
+
+    console.clear();
+    console.log('=================================='.yellow);
+    console.log('   Gestor de tareas con Node.JS'.white);
+    console.log('==================================\n'.yellow);
+
+    const {id} = await inquirer.prompt(question);
+    return id;
+
+}
+
 module.exports =  {
     inquirerMenu,
     pause,
-    readInput
+    readInput,
+    deleteMenu
 }
