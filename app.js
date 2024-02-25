@@ -37,6 +37,7 @@ const main = async() =>{
             case '6':
                 const id = await deleteMenu(tasks.listArr);
                 if (id !==0) {
+                    
                     const confirm = await confirmDelete(tasks.listArr, id);
                     confirm ? tasks.deleteTask(id) : console.log('Eliminación cancelada');
                 }

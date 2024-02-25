@@ -94,14 +94,14 @@ const deleteMenu = async(tasks = []) =>{
     })
     const question = [
         {
-            type: 'list',
-            name: 'id',
-            message: `${'Selecciona una opcion a borrar ↑↓'.yellow}`,
+            type: 'checkbox',
+            name: 'ids',
+            message: `${'Selecciona las opciones a borrar ↑↓'.yellow}`,
             choices
         }
     ]
-    const {id} = await inquirer.prompt(question);
-    return id;
+    const {ids} = await inquirer.prompt(question);
+    return ids;
 }
 
 const confirmDelete = async(tasks = [], id) =>{
@@ -132,6 +132,7 @@ const confirmDelete = async(tasks = [], id) =>{
     console.log('=================================='.yellow);
     console.log('   Gestor de tareas con Node.JS'.white);
     console.log('==================================\n'.yellow);
+    console.log(id);
     const {confirmation} = await inquirer.prompt(question);
     return confirmation;
 }
