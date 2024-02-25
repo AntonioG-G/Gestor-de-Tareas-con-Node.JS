@@ -88,6 +88,10 @@ const deleteMenu = async(tasks = []) =>{
             name:`${i+1}. ${tarea.description}`.white
         }
     });
+    choices.unshift({
+        value: 0,
+        name: '0. '.white +'Cancelar'.red
+    })
     const question = [
         {
             type: 'list',
@@ -96,20 +100,48 @@ const deleteMenu = async(tasks = []) =>{
             choices
         }
     ]
+    const {id} = await inquirer.prompt(question);
+    return id;
+}
 
+const confirmDelete = async(tasks = [], id) =>{
+    let desc = '';
+    tasks.forEach((task) =>{
+        if (id === task.id) {
+            desc = task.description;
+        }
+    });
+    const question = [
+        {
+            type: 'list',
+            name: 'confirmation',
+            message: `¿Estás seguro que deseas borrar ${desc}?`.yellow,
+            choices: [
+                {
+                    value: true,
+                    name: 'Si'
+                },
+                {
+                    value: false,
+                    name: 'No'
+                }
+            ]
+        }
+    ]
     console.clear();
     console.log('=================================='.yellow);
     console.log('   Gestor de tareas con Node.JS'.white);
     console.log('==================================\n'.yellow);
-
-    const {id} = await inquirer.prompt(question);
-    return id;
-
+    const {confirmation} = await inquirer.prompt(question);
+    return confirmation;
 }
+
+
 
 module.exports =  {
     inquirerMenu,
     pause,
     readInput,
-    deleteMenu
+    deleteMenu,
+    confirmDelete
 }

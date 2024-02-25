@@ -1,5 +1,5 @@
 let colors = require('colors');
-const { inquirerMenu, pause, readInput, deleteMenu } = require('./helpers/InteractiveMenu');
+const { inquirerMenu, pause, readInput, deleteMenu, confirmDelete } = require('./helpers/InteractiveMenu');
 const Tasks = require('./models/tasks');
 const { saveDB, readDB } = require('./helpers/saveFile');
 
@@ -36,7 +36,10 @@ const main = async() =>{
                 break;
             case '6':
                 const id = await deleteMenu(tasks.listArr);
-                tasks.deleteTask(id);
+                if (id !==0) {
+                    const confirm = await confirmDelete(tasks.listArr, id);
+                    confirm ? tasks.deleteTask(id) : console.log('Eliminación cancelada');
+                }
                 break;
         }
 
