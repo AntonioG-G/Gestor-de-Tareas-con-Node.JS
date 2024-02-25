@@ -35,13 +35,18 @@ class Tasks {
         
         for (let i = 1; i <= list.length; i++) {
             let d = list[i-1].description;
+            let date = list[i-1].completeDate;
             let c = '';
             if (!list[i-1].completeDate) {
                 c = 'Pendiente'.red;
             }else{
                 c = 'Completa'.green;
             }
-            console.log(`\n   ${i}.`.white, `${d}`.yellow, `${dots}`.white,`${c}`);
+            if (date!=null) {
+                console.log(`\n   ${i}.`.white, `${d}`.yellow, `${dots}`.white,`${c}`, ` ${dots}`.white, `${date}`.yellow);
+            }else{
+                console.log(`\n   ${i}.`.white, `${d}`.yellow, `${dots}`.white,`${c}`);
+            }
             
         }
     }
@@ -53,7 +58,7 @@ class Tasks {
         this.listArr.forEach((task) => {
             const {description, completeDate} = task;
             if (completeDate) {
-                console.log(`\n   ${i}.`.white, `${description}`.yellow, `${dots}`.white,`${status}`);
+                console.log(`\n   ${i}.`.white, `${description}`.yellow, `${dots}`.white,`${status}`, ` ${dots}`.white, `${completeDate}`.yellow);
                 i++;
             }
         });
@@ -70,6 +75,21 @@ class Tasks {
                 i++;
             }
         });
+    }
+
+    taskStatus(id){
+        id.forEach((id)=>{
+            if(this._list[id]){
+                
+                if (this._list[id].completeDate) {
+                    this._list[id].completeDate = null;
+                }
+                else{
+                    const date =  new Date();
+                    this._list[id].completeDate = date.toISOString().slice(0,10);
+                }
+            }
+        })
     }
 
     deleteTask(ids){

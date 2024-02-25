@@ -81,6 +81,37 @@ const readInput = async(msg) =>{
     return desc;
 }
 
+const changeStatus = async(tasks = [])=>{
+
+    const choices = tasks.map( (tarea, i) =>{
+        if (tarea.completeDate !== null) {
+            return{
+                value: tarea.id,
+                name: `${i+1}. ${tarea.description.white} ${'Completada'.green} ${'→'.white} ${'Pendiente'.red}`
+            }
+        }else{
+            return{
+                value: tarea.id,
+                name: `${i+1}. ${tarea.description.white} ${'Pendiente'.red} ${'→'.white} ${'Completada'.green}`
+            }
+        }
+    });
+    choices.unshift({
+        value: 0,
+        name: '0. '.white +'Cancelar'.red
+    })
+    const question = [
+        {
+            type: 'checkbox',
+            name: 'ids',
+            message: `${'Selecciona las opciones a borrar ↑↓'.yellow}`,
+            choices
+        }
+    ]
+    const {ids} = await inquirer.prompt(question);
+    return ids;
+}
+
 const deleteMenu = async(tasks = []) =>{
     const choices = tasks.map( (tarea, i) =>{
         return{
@@ -105,12 +136,16 @@ const deleteMenu = async(tasks = []) =>{
 }
 
 const confirmDelete = async(tasks = [], id) =>{
-    let desc = '';
-    tasks.forEach((task) =>{
-        if (id === task.id) {
-            desc = task.description;
-        }
-    });
+    let desc= [];
+    let x =0;
+    for (let i = 0; i < id.length; i++) {
+        tasks.forEach(task => {
+            if (task.id === id[i]) {
+                
+                desc.push('\n', task.description)
+            }
+        });
+    }
     const question = [
         {
             type: 'list',
@@ -132,7 +167,6 @@ const confirmDelete = async(tasks = [], id) =>{
     console.log('=================================='.yellow);
     console.log('   Gestor de tareas con Node.JS'.white);
     console.log('==================================\n'.yellow);
-    console.log(id);
     const {confirmation} = await inquirer.prompt(question);
     return confirmation;
 }
@@ -143,6 +177,7 @@ module.exports =  {
     inquirerMenu,
     pause,
     readInput,
+    changeStatus,
     deleteMenu,
     confirmDelete
 }

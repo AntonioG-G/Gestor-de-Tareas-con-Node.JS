@@ -1,5 +1,5 @@
 let colors = require('colors');
-const { inquirerMenu, pause, readInput, deleteMenu, confirmDelete } = require('./helpers/InteractiveMenu');
+const { inquirerMenu, pause, readInput, changeStatus, deleteMenu, confirmDelete } = require('./helpers/InteractiveMenu');
 const Tasks = require('./models/tasks');
 const { saveDB, readDB } = require('./helpers/saveFile');
 
@@ -34,12 +34,17 @@ const main = async() =>{
             case '4':
                 tasks.listPendingTasks();
                 break;
+            case '5':
+                const id = await changeStatus(tasks.listArr);
+                if (id[0] !==0) {
+                    tasks.taskStatus(id);
+                }
+                break;
             case '6':
-                const id = await deleteMenu(tasks.listArr);
-                if (id !==0) {
-                    
-                    const confirm = await confirmDelete(tasks.listArr, id);
-                    confirm ? tasks.deleteTask(id) : console.log('Eliminación cancelada');
+                const ids = await deleteMenu(tasks.listArr);
+                if (ids[0] !==0) {
+                    const confirm = await confirmDelete(tasks.listArr, ids);
+                    confirm ? tasks.deleteTask(ids) : console.log('Eliminación cancelada');
                 }
                 break;
         }
