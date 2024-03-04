@@ -16,3 +16,9 @@ Para poder hacer uso de este gestor de tareas requieres:
 - Ejecutar el comando `npm start`.
 
 ## Funcionalidades:
+- Menú Interactivo: Haciendo uso del paquete Inquirer.JS, podemos generar un menú que arroja las múltiples opciones disponibles para hacer uso de la aplicación, estos menús están presentados en formato de lista, o con un sistema de checkbox para hacer selección de múltiples incisos. El menú considera opciones de confirmación y cancelación de operaciones para evitar errores indeseados.
+  
+  - Navegación del programa mediante el uso de las flechas arriba (↑) y abajo (↓).
+  - Selección de checkbox con (barra espacio) en el teclado, seleccionar todos los elementos con la tecla (a), y hacer una selección invertida con (i)
+    
+- Creación y lectura de Registro: La aplicación de forma independiente genera un registro de las tareas creadas dentro de los ficheros del programa, este registro en formato .JSON es leído en cada nuevo arranque de la app, dando una funcionalidad persistente en todo el ciclo de ejecución.
